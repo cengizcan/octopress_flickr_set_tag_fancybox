@@ -19,6 +19,7 @@
 #     a_target:      '_blank'
 #     image_rel:     ''
 #     image_size:    's'
+#     per_page:      '500'
 #     api_key:       ''
 #
 # By default, thumbnails are linked to their corresponding Flickr page.
@@ -53,6 +54,7 @@ module Jekyll
       @config['a_target']      ||= '_blank'
       @config['image_rel']     ||= ''
       @config['image_size']    ||= 's'
+      @config['per_page']	   ||= '500'
       @config['api_key']       ||= ''
     end
 
@@ -81,7 +83,7 @@ module Jekyll
     end
 
     def json
-      uri  = URI.parse("http://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&photoset_id=#{@set}&api_key=#{@config['api_key']}&format=json&nojsoncallback=1")
+      uri  = URI.parse("http://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&photoset_id=#{@set}&per_page=#{@config['per_page']}&api_key=#{@config['api_key']}&format=json&nojsoncallback=1")
       http = Net::HTTP.new(uri.host, uri.port)
       return http.request(Net::HTTP::Get.new(uri.request_uri)).body
     end
