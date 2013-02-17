@@ -19,6 +19,7 @@ Default Configuration (override in _config.yml):
       a_target:      '_blank'
       image_rel:     ''
       image_size:    's'
+      per_page:      '500'
       api_key:       ''
 
 By default, thumbnails are linked to their corresponding Flickr page.
