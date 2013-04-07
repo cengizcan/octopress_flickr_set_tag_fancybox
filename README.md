@@ -1,8 +1,10 @@
-# Flickr Set Tag with fancybox support
+# Flickr Set Tag With Fancybox Support
 
-Fork of https://github.com/macjasp/jekyll_flickr_set_tag
+Generates image galleries from a Flickr set and adds fancybox scripts.
 
-Generates image galleries from a Flickr set.
+Fork of [jekyll_flickr_set_tag](https://github.com/macjasp/jekyll_flickr_set_tag) project
+
+
 
 Usage:
 
@@ -24,11 +26,8 @@ loop: 			'true'
 image_size:    	'b'
 thumb_size:    	'q'
 per_page:      	'500'
-user:          	''
 api_key:       	''
-
-You need your flickr username as the thumbnails automatically link to the full flickr page within your photostream.
-
-a_href is defunct and will remove in the next version.
+	
+No need to flickr username.
 
 You must provide an API Key in order to query Flickr. It must be configured in _config.yml.
