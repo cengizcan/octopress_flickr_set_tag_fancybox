@@ -1,4 +1,6 @@
-# Flickr Set Tag
+# Flickr Set Tag with fancybox support
+
+Fork of https://github.com/macjasp/jekyll_flickr_set_tag
 
 Generates image galleries from a Flickr set.
 
@@ -12,16 +14,18 @@ Example:
 
 Default Configuration (override in _config.yml):
 
-    flickr_set:
-      gallery_tag:   'p'
-      gallery_class: 'gallery'
-      a_href:        nil
-      a_target:      '_blank'
-      image_rel:     ''
-      image_size:    's'
-      per_page:      '500'
-      user:          ''
-      api_key:       ''
+flickr_set:
+gallery_tag:	'p'
+gallery_class:	'gallery'
+effect: 		'elastic' # 'fade', 'elastic'
+openCloseSpeed: '250'
+nextPrevSpeed: 	'250'
+loop: 			'true'
+image_size:    	'b'
+thumb_size:    	'q'
+per_page:      	'500'
+user:          	''
+api_key:       	''
 
 You need your flickr username as the thumbnails automatically link to the full flickr page within your photostream.
 

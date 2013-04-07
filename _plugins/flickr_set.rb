@@ -50,13 +50,13 @@ module Jekyll
       @config = Jekyll.configuration({})['flickr_set'] || {}
 
       @config['gallery_tag']   ||= 'p'
-      @config['gallery_class'] ||= 'gallery'
-      @config['a_href']        ||= nil
-      @config['a_target']      ||= '_blank'
-      @config['image_rel']     ||= ''
-      @config['image_size']    ||= 's'
+      @config['effect']    ||= 'elastic'
+      @config['openCloseSpeed']    ||= '250'
+      @config['nextPrevSpeed']    ||= '250'
+      @config['loop']    ||= 'true'
+      @config['thumb_size']    ||= 's'
+      @config['image_size']    ||= 'z'
       @config['per_page']	   ||= '500'
-      @config['user']          ||= ''
       @config['api_key']       ||= ''
     end
 
@@ -64,12 +64,22 @@ module Jekyll
       html = "<#{@config['gallery_tag']} class=\"#{@config['gallery_class']}\">"
 
       photos.each do |photo|
-        html << "<a href=\"#{photo.full_url}\" target =\"#{@config['a_target']}\">"
-        html << "  <img src=\"#{photo.thumbnail_url}\" rel=\"#{@config['image_rel']}\"/>"
-        html << "</a>"
+       	html << "<a rel=\"flickr_set-#{@set}\" href=\"#{photo.url}\" title=\"#{photo.title}\"><img src=\"#{photo.thumbnail_url}\" /></a>"
       end
-
-      html << "</#{@config['gallery_tag']}>"
+	html << "</#{@config['gallery_tag']}>"
+      html << "<script type=\"text/javascript\">"
+      html << "$(\"a[rel=flickr_set-#{@set}]\").fancybox({"
+      html << "'openEffect': '#{@config['effect']}',"
+      html << "'closeEffect': '#{@config['effect']}',"
+      html << "'nextEffect': '#{@config['effect']}',"
+      html << "'prevEffect': '#{@config['effect']}',"
+      html << "'openSpeed': #{@config['openCloseSpeed']},"
+      html << "'closeSpeed': #{@config['openCloseSpeed']},"
+      html << "'nextSpeed': #{@config['nextPrevSpeed']},"
+      html << "'prevSpeed': #{@config['nextPrevSpeed']},"
+      html << "'loop': #{@config['loop']}"
+      html << "});"
+      html << "</script>"
 
       return html
     end
@@ -78,7 +88,7 @@ module Jekyll
       @photos = Array.new
 
       JSON.parse(json)['photoset']['photo'].each do |item|
-        @photos << FlickrPhoto.new(item['title'], item['id'], item['secret'], item['server'], item['farm'], @config['user'], @config['image_size'])
+        @photos << FlickrPhoto.new(item['title'], item['id'], item['secret'], item['server'], item['farm'], @config['user'], @config['thumb_size'], @config['image_size'])
       end
 
       @photos.sort
@@ -93,11 +103,11 @@ module Jekyll
 
   class FlickrPhoto
 
-    def initialize(title, id, secret, server, farm, user, thumbnail_size)
+    def initialize(title, id, secret, server, farm, user, thumbnail_size, image_size)
       @title          = title
-      @url            = "http://farm#{farm}.staticflickr.com/#{server}/#{id}_#{secret}.jpg"
-      @full_url            = "http://www.flickr.com/photos/#{user}/#{id}/in/photostream"
-      @thumbnail_url  = url.gsub(/\.jpg/i, "_#{thumbnail_size}.jpg")
+      @raw_url			= "http://farm#{farm}.staticflickr.com/#{server}/#{id}_#{secret}"
+      @url            = "#{raw_url}_#{image_size}.jpg"
+      @thumbnail_url  = "#{raw_url}_#{thumbnail_size}.jpg"
       @thumbnail_size = thumbnail_size
     end
 
@@ -108,15 +118,13 @@ module Jekyll
     def url(size_override = nil)
       return (size_override ? @thumbnail_url.gsub(/_#{@thumbnail_size}.jpg/i, "_#{size_override}.jpg") : @url)
     end
-      
-    def full_url
-      return @full_url
-    end
 
     def thumbnail_url
       return @thumbnail_url
     end
-
+	def raw_url
+      return @raw_url
+    end
     def <=>(photo)
       @title <=> photo.title
     end
