@@ -16,17 +16,17 @@ Example:
 
 Default Configuration (override in _config.yml):
 
-flickr_set:
-gallery_tag:	'p'
-gallery_class:	'gallery'
-effect: 		'elastic' # 'fade', 'elastic'
-openCloseSpeed: '250'
-nextPrevSpeed: 	'250'
-loop: 			'true'
-image_size:    	'b'
-thumb_size:    	'q'
-per_page:      	'500'
-api_key:       	''
+	flickr_set:
+	gallery_tag:	'p'
+	gallery_class:	'gallery'
+	effect: 		'elastic' # 'fade', 'elastic'
+	openCloseSpeed: '250'
+	nextPrevSpeed: 	'250'
+	loop: 			'true'
+	image_size:    	'b'
+	thumb_size:    	'q'
+	per_page:      	'500'
+	api_key:       	''
 	
 No need to flickr username.
 
